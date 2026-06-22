@@ -692,30 +692,31 @@ def render_simulator():
             else:
                 st.write("Belirgin bir risk faktörü bulunamadı.")
                 
-        # Bireysel Geri Kazanım Tavsiyesi Kutusu (Sütunların Altına, Kartın İçine)
-        primary_driver = contributions[0][0] if len(contributions) > 0 else "Belirlenemedi"
-        recomm = recommendation_dict.get(primary_driver, "Çalışan ile İK koordinasyonunda proaktif birebir bağlılık görüşmesi (stay interview) düzenlenmeli ve beklentileri analiz edilmeli.")
-        
-        if prob_val >= opt:
-            box_style = "border: 1px solid #EF4444; background-color: #FEF2F2;"
-            label_style = "color: #B91C1C;"
-        elif prob_val >= ew:
-            box_style = "border: 1px solid #F59E0B; background-color: #FFFBEB;"
-            label_style = "color: #D97706;"
-        else:
-            box_style = "border: 1px solid #10B981; background-color: #ECFDF5;"
-            label_style = "color: #059669;"
+        # Bireysel Geri Kazanım Tavsiyesi Kutusu (Sadece %50 ve üzeri ya da Kritik/Erken Uyarı durumlarında gösterilir)
+        if prob_val >= 0.50 or prob_val >= ew:
+            primary_driver = contributions[0][0] if len(contributions) > 0 else "Belirlenemedi"
+            recomm = recommendation_dict.get(primary_driver, "Çalışan ile İK koordinasyonunda proaktif birebir bağlılık görüşmesi (stay interview) düzenlenmeli ve beklentileri analiz edilmeli.")
             
-        st.markdown(f"""
-        <div style="{box_style} padding: 18px; border-radius: 12px; margin-top: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);">
-            <strong style="{label_style} font-size: 1.05rem; display: block; margin-bottom: 8px; font-weight: 800;">🎯 İK Aksiyon ve Geri Kazanım Tavsiyesi</strong>
-            <p style="margin: 0; font-size: 0.9rem; color: #1E293B; font-weight: 500; line-height: 1.5;">
-                Yapay zekanın tespit ettiği birincil risk tetikleyicisi: <strong style="color: #0F172A;">{primary_driver}</strong><br>
-                İK departmanı için önerilen proaktif eylem planı:<br>
-                <span style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: block; margin-top: 5px;">👉 {recomm}</span>
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+            if prob_val >= opt:
+                box_style = "border: 1px solid #EF4444; background-color: #FEF2F2;"
+                label_style = "color: #B91C1C;"
+            elif prob_val >= ew:
+                box_style = "border: 1px solid #F59E0B; background-color: #FFFBEB;"
+                label_style = "color: #D97706;"
+            else:
+                box_style = "border: 1px solid #10B981; background-color: #ECFDF5;"
+                label_style = "color: #059669;"
+                
+            st.markdown(f"""
+            <div style="{box_style} padding: 18px; border-radius: 12px; margin-top: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);">
+                <strong style="{label_style} font-size: 1.05rem; display: block; margin-bottom: 8px; font-weight: 800;">🎯 İK Aksiyon ve Geri Kazanım Tavsiyesi</strong>
+                <p style="margin: 0; font-size: 0.9rem; color: #1E293B; font-weight: 500; line-height: 1.5;">
+                    Yapay zekanın tespit ettiği birincil risk tetikleyicisi: <strong style="color: #0F172A;">{primary_driver}</strong><br>
+                    İK departmanı için önerilen proaktif eylem planı:<br>
+                    <span style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: block; margin-top: 5px;">👉 {recomm}</span>
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
         
         st.markdown("</div>", unsafe_allow_html=True)
 
