@@ -25,129 +25,244 @@ if workspace_src not in sys.path:
     sys.path.append(workspace_src)
 from pipeline import MKEDataPipeline
 
-# CSS for corporate Bain/McKinsey light-theme dashboard aesthetic
+# CSS for premium dark-tech glassmorphism dashboard aesthetic
 st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-    /* Reset Streamlit defaults for custom dashboard look */
+    /* Hide Streamlit default UI elements and configure spacing */
+    [data-testid="stHeader"] {background: rgba(0,0,0,0) !important;}
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Global Styles */
+    /* Main body background - premium radial gradient dark theme */
     html, body, [class*="css"], .stApp {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        background-color: #F4F6F9 !important;
-        color: #1E293B !important;
+        font-family: 'Outfit', sans-serif !important;
+        background: radial-gradient(circle at 10% 20%, #1e1b4b 0%, #0f172a 45%, #020617 100%) !important;
+        color: #F8FAFC !important;
     }
     
-    /* Force readable text colors for Streamlit widgets */
+    /* Streamlit widgets styling adjustments for dark theme readibility */
     div[data-testid="stWidgetLabel"] p,
     div[data-testid="stMarkdownContainer"] p,
     .stRadio label,
     .stSlider label,
     .stSelectbox label,
     .stNumberInput label,
-    .stCheckbox label,
-    .stRadio div[role="radiogroup"] p,
-    div[data-testid="stRadio"] label p,
-    .stWidgetForm label,
-    .stApp label {
-        color: #1E293B !important;
+    .stCheckbox label {
+        color: #94A3B8 !important;
         font-weight: 500 !important;
     }
     
-    /* Header Card styling */
+    /* Selectbox custom background to fit dark theme */
+    .stSelectbox div[data-baseweb="select"] {
+        background-color: rgba(30, 41, 59, 0.7) !important;
+        color: white !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    /* Custom Header Card */
     .dashboard-header {
-        background: #1B2A4A;
-        padding: 30px;
-        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.65) 0%, rgba(15, 23, 42, 0.75) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         color: white;
         margin-bottom: 25px;
-        box-shadow: 0 4px 20px rgba(27, 42, 74, 0.15);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
     
-    /* KPI Cards styling */
+    /* Content Cards (Glassmorphism design) */
+    .content-card {
+        background: rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 26px;
+        border-radius: 20px;
+        box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.4);
+        margin-bottom: 25px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .content-card:hover {
+        border-color: rgba(99, 102, 241, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    /* Card Titles */
+    .card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #FFFFFF;
+        margin-bottom: 18px;
+        border-left: 4px solid #6366F1;
+        padding-left: 12px;
+        letter-spacing: 0.5px;
+    }
+    
+    /* KPI Cards (Glassmorphic layout with glowing borders) */
     .kpi-container {
-        background: white;
-        border: 1px solid #E2E8F0;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.65) 100%);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
         padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         text-align: left;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        border-bottom: 4px solid #1B2A4A;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    .kpi-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #6366F1;
+    }
+    .kpi-container:hover {
+        transform: translateY(-4px);
     }
     
     .kpi-title {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #64748B;
+        letter-spacing: 1.5px;
+        color: #94A3B8;
         font-weight: 700;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
     }
     
     .kpi-value {
-        font-size: 2.8rem;
+        font-size: 2.6rem;
         font-weight: 800;
-        color: #1B2A4A;
+        color: #FFFFFF;
         line-height: 1.1;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
     }
     
     .kpi-subtext {
         font-size: 0.8rem;
-        color: #94A3B8;
+        color: #64748B;
         font-weight: 500;
     }
     
-    /* Layout sections */
-    .content-card {
-        background: white;
-        border: 1px solid #E2E8F0;
-        padding: 25px;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-bottom: 25px;
-    }
+    /* Custom status color indicators for KPI card hover effects */
+    .kpi-red::before { background: linear-gradient(90deg, #EF4444, #F87171); }
+    .kpi-red:hover { box-shadow: 0 12px 35px rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); }
     
-    .card-title {
-        font-size: 1.1rem;
-        font-weight: 800;
-        color: #1B2A4A;
-        margin-bottom: 15px;
-        border-left: 4px solid #F39C12;
-        padding-left: 10px;
-    }
+    .kpi-orange::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+    .kpi-orange:hover { box-shadow: 0 12px 35px rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); }
     
-    /* Action Table Style */
+    .kpi-green::before { background: linear-gradient(90deg, #10B981, #34D399); }
+    .kpi-green:hover { box-shadow: 0 12px 35px rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); }
+    
+    .kpi-blue::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+    .kpi-blue:hover { box-shadow: 0 12px 35px rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); }
+    
+    /* Action Table Styling */
     .action-table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0 8px;
         margin-top: 15px;
     }
     .action-table th {
-        background-color: #1B2A4A;
-        color: white;
-        font-weight: 700;
-        padding: 12px;
+        background-color: rgba(30, 41, 59, 0.4);
+        color: #94A3B8;
+        font-weight: 600;
+        padding: 14px 16px;
         text-align: left;
         font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .action-table td {
-        padding: 12px;
-        border-bottom: 1px solid #E2E8F0;
-        font-size: 0.85rem;
+    .action-table tr {
+        background-color: rgba(30, 41, 59, 0.2);
+        transition: background-color 0.2s ease;
     }
     .action-table tr:hover {
-        background-color: #F8FAFC;
+        background-color: rgba(30, 41, 59, 0.4);
+    }
+    .action-table td {
+        padding: 16px;
+        font-size: 0.875rem;
+        color: #E2E8F0;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .action-table td:first-child {
+        border-left: 1px solid rgba(255, 255, 255, 0.04);
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+    .action-table td:last-child {
+        border-right: 1px solid rgba(255, 255, 255, 0.04);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 5px 12px;
+        border-radius: 9999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .badge-red {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: #F87171;
+        border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+    .badge-orange {
+        background-color: rgba(245, 158, 11, 0.15);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .badge-green {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    
+    /* Customizing Streamlit Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: rgba(15, 23, 42, 0.45) !important;
+        padding: 6px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 38px;
+        padding: 0 16px;
+        background-color: transparent !important;
+        border-radius: 8px !important;
+        color: #94A3B8 !important;
+        font-weight: 600 !important;
+        border: none !important;
+        transition: all 0.2s ease;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #6366F1 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -651,28 +766,28 @@ ortalama_risk = df_filtered["Risk_Skoru"].mean() * 100
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 
 with kpi1:
-    st.markdown(f"""<div class="kpi-container" style="border-bottom-color: #C0392B;">
+    st.markdown(f"""<div class="kpi-container kpi-red">
 <div class="kpi-title">🚨 Acil Müdahale</div>
 <div class="kpi-value">{acil_sayi} Kişi</div>
 <div class="kpi-subtext">Kritik Eşik Üzerindeki Yüksek Risk</div>
 </div>""", unsafe_allow_html=True)
 
 with kpi2:
-    st.markdown(f"""<div class="kpi-container" style="border-bottom-color: #F39C12;">
+    st.markdown(f"""<div class="kpi-container kpi-orange">
 <div class="kpi-title">🟡 Erken Uyarı</div>
 <div class="kpi-value">{erken_uyari_sayi} Kişi</div>
 <div class="kpi-subtext">Takip Listesindeki Orta Risk</div>
 </div>""", unsafe_allow_html=True)
 
 with kpi3:
-    st.markdown(f"""<div class="kpi-container" style="border-bottom-color: #1A7F5A;">
+    st.markdown(f"""<div class="kpi-container kpi-green">
 <div class="kpi-title">🟢 Güvenli Bölge</div>
 <div class="kpi-value">{guvenli_sayi} Kişi</div>
 <div class="kpi-subtext">Normal Değerler Altındaki Personel</div>
 </div>""", unsafe_allow_html=True)
 
 with kpi4:
-    st.markdown(f"""<div class="kpi-container" style="border-bottom-color: #1B2A4A;">
+    st.markdown(f"""<div class="kpi-container kpi-blue">
 <div class="kpi-title">Kurum Risk Ortalaması</div>
 <div class="kpi-value">%{ortalama_risk:.1f}</div>
 <div class="kpi-subtext">Tüm Kurum Genel İstifa İndeksi</div>
@@ -697,21 +812,21 @@ if yaka_secimi == "Tüm Çalışanlar":
         fig.patch.set_facecolor('none')
         ax.set_facecolor('none')
         
-        bars = ax.barh(dept_risk.index, dept_risk.values, color='#1B2A4A', edgecolor='none', height=0.55)
-        bars[-1].set_color('#C0392B') 
+        bars = ax.barh(dept_risk.index, dept_risk.values, color='#6366F1', edgecolor='none', height=0.55)
+        bars[-1].set_color('#EF4444') 
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#64748B')
-        ax.spines['bottom'].set_color('#64748B')
-        ax.tick_params(colors='#1E293B', labelsize=10)
-        ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#1E293B')
+        ax.spines['left'].set_color('#334155')
+        ax.spines['bottom'].set_color('#334155')
+        ax.tick_params(colors='#94A3B8', labelsize=10)
+        ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
         ax.set_axisbelow(True)
         
         for bar in bars:
             width = bar.get_width()
             ax.text(width + 0.5, bar.get_y() + bar.get_height()/2, f'%{width:.1f}', 
-                    va='center', ha='left', color='#1E293B', fontweight='bold', fontsize=9)
+                    va='center', ha='left', color='#F8FAFC', fontweight='bold', fontsize=9)
                     
         plt.tight_layout()
         st.pyplot(fig)
@@ -731,20 +846,20 @@ if yaka_secimi == "Tüm Çalışanlar":
         categories = ['Beyaz Yaka', 'Mavi Yaka']
         values = [yaka_risk.get('Beyaz', 0), yaka_risk.get('Mavi', 0)]
         
-        bars = ax.bar(categories, values, color=['#34495E', '#1B2A4A'], width=0.45)
+        bars = ax.bar(categories, values, color=['#818CF8', '#38BDF8'], width=0.45)
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#64748B')
-        ax.spines['bottom'].set_color('#64748B')
-        ax.tick_params(colors='#1E293B', labelsize=10)
-        ax.yaxis.grid(True, linestyle='--', alpha=0.15, color='#1E293B')
+        ax.spines['left'].set_color('#334155')
+        ax.spines['bottom'].set_color('#334155')
+        ax.tick_params(colors='#94A3B8', labelsize=10)
+        ax.yaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
         ax.set_axisbelow(True)
         
         for bar in bars:
             yval = bar.get_height()
             ax.text(bar.get_x() + bar.get_width()/2.0, yval + 0.3, f'%{yval:.1f}', 
-                    va='bottom', ha='center', color='#1E293B', fontweight='bold', fontsize=10)
+                    va='bottom', ha='center', color='#F8FAFC', fontweight='bold', fontsize=10)
                     
         plt.tight_layout()
         st.pyplot(fig)
@@ -761,21 +876,21 @@ else:
     fig.patch.set_facecolor('none')
     ax.set_facecolor('none')
     
-    bars = ax.barh(dept_risk.index, dept_risk.values, color='#1B2A4A', edgecolor='none', height=0.55)
-    bars[-1].set_color('#C0392B') 
+    bars = ax.barh(dept_risk.index, dept_risk.values, color='#6366F1', edgecolor='none', height=0.55)
+    bars[-1].set_color('#EF4444') 
     
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#64748B')
-    ax.spines['bottom'].set_color('#64748B')
-    ax.tick_params(colors='#1E293B', labelsize=10)
-    ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#1E293B')
+    ax.spines['left'].set_color('#334155')
+    ax.spines['bottom'].set_color('#334155')
+    ax.tick_params(colors='#94A3B8', labelsize=10)
+    ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
     ax.set_axisbelow(True)
     
     for bar in bars:
         width = bar.get_width()
         ax.text(width + 0.5, bar.get_y() + bar.get_height()/2, f'%{width:.1f}', 
-                va='center', ha='left', color='#1E293B', fontweight='bold', fontsize=9)
+                va='center', ha='left', color='#F8FAFC', fontweight='bold', fontsize=9)
                 
     plt.tight_layout()
     st.pyplot(fig)
@@ -806,14 +921,14 @@ with col_det1:
         feats = [item[0] for item in sorted_importances][::-1]
         imp_vals = [item[1] for item in sorted_importances][::-1]
         
-        bars = ax.barh(feats, imp_vals, color='#F39C12', edgecolor='none', height=0.55)
+        bars = ax.barh(feats, imp_vals, color='#F59E0B', edgecolor='none', height=0.55)
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#64748B')
-        ax.spines['bottom'].set_color('#64748B')
-        ax.tick_params(colors='#1E293B', labelsize=10)
-        ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#1E293B')
+        ax.spines['left'].set_color('#334155')
+        ax.spines['bottom'].set_color('#334155')
+        ax.tick_params(colors='#94A3B8', labelsize=10)
+        ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
         ax.set_axisbelow(True)
         
         plt.tight_layout()
@@ -843,16 +958,16 @@ with col_det2:
     fig.patch.set_facecolor('none')
     ax.set_facecolor('none')
     
-    ax.plot(kidem_risk.index, kidem_risk.values, color='#1B2A4A', marker='o', linewidth=2.5, markersize=6)
+    ax.plot(kidem_risk.index, kidem_risk.values, color='#6366F1', marker='o', linewidth=2.5, markersize=6, markerfacecolor='#38BDF8')
     
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#64748B')
-    ax.spines['bottom'].set_color('#64748B')
-    ax.tick_params(colors='#1E293B', labelsize=10)
-    ax.grid(True, linestyle='--', alpha=0.15, color='#1E293B')
-    ax.set_xlabel("MKE Hizmet Yılı (Kıdem)", color='#1E293B', fontweight='bold', fontsize=9)
-    ax.set_ylabel("Ortalama Risk Oranı (%)", color='#1E293B', fontweight='bold', fontsize=9)
+    ax.spines['left'].set_color('#334155')
+    ax.spines['bottom'].set_color('#334155')
+    ax.tick_params(colors='#94A3B8', labelsize=10)
+    ax.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
+    ax.set_xlabel("MKE Hizmet Yılı (Kıdem)", color='#94A3B8', fontweight='bold', fontsize=9)
+    ax.set_ylabel("Ortalama Risk Oranı (%)", color='#94A3B8', fontweight='bold', fontsize=9)
     
     plt.tight_layout()
     st.pyplot(fig)
@@ -919,14 +1034,14 @@ for idx, row in top_10.iterrows():
     
     # Risk kategorisine göre renk ve badge
     if "ACİL" in row['Risk_Kategorisi']:
-        score_color = "#C0392B"
-        badge_text = "🚨 ACİL MÜDAHALE"
+        score_color = "#F87171"
+        badge_html = "<span class='badge badge-red'>🚨 ACİL MÜDAHALE</span>"
     elif "ERKEN" in row['Risk_Kategorisi']:
-        score_color = "#F39C12"
-        badge_text = "🟡 ERKEN UYARI"
+        score_color = "#FBBF24"
+        badge_html = "<span class='badge badge-orange'>🟡 ERKEN UYARI</span>"
     else:
-        score_color = "#1A7F5A"
-        badge_text = "🟢 GÜVENLİ"
+        score_color = "#34D399"
+        badge_html = "<span class='badge badge-green'>🟢 GÜVENLİ</span>"
     
     table_html += f"""<tr>
 <td><strong>{row['Personel_ID']}</strong></td>
@@ -934,8 +1049,8 @@ for idx, row in top_10.iterrows():
 <td>{row['Departman']}</td>
 <td>{row['Unvan']}</td>
 <td style="text-align:right; font-weight:800; color:{score_color};">{risk_formatted}</td>
-<td style="font-weight:700; color:{score_color};">{badge_text}</td>
-<td style="font-weight:600; color:#1B2A4A;">🔴 {row['Ana_Sebep']}</td>
+<td>{badge_html}</td>
+<td style="font-weight:600; color:#E2E8F0;">⚡ {row['Ana_Sebep']}</td>
 </tr>"""
 
 table_html += "</tbody></table>"
