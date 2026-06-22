@@ -61,17 +61,16 @@ st.markdown("""
         border: 1px solid #cbd5e1 !important;
     }
     
-    /* Custom Header Card - premium dark navy contrast header */
+    /* Custom Header Card - premium light SaaS header style */
     .dashboard-header {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         padding: 28px;
         border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        color: white;
+        border: 1px solid #cbd5e1;
+        border-left: 6px solid #6366f1;
+        color: #0f172a;
         margin-bottom: 25px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+        box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.15);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -734,12 +733,12 @@ if view == "👤 Kişi Bazlı Risk Simülatörü (What-If)":
     st.markdown(f"""
     <div class="dashboard-header">
         <div style="text-align:left;">
-            <h2 style="margin:0; font-weight:800; font-size:1.8rem; color:white;">👤 Çalışan İstifa Riski Simülatörü</h2>
-            <p style="margin:5px 0 0 0; font-size:0.95rem; color:#94A3B8;">İK Karar Destek ve 'What-If' Simülasyon Ekranı</p>
+            <h2 style="margin:0; font-weight:800; font-size:1.8rem; color:#0f172a;">👤 Çalışan İstifa Riski Simülatörü</h2>
+            <p style="margin:5px 0 0 0; font-size:0.95rem; color:#475569; font-weight:500;">İK Karar Destek ve 'What-If' Simülasyon Ekranı</p>
         </div>
-        <div style="text-align:right; background:rgba(255,255,255,0.08); padding:10px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
-            <small style="color:#94A3B8; text-transform:uppercase; font-weight:700;">Simülasyon Modeli</small>
-            <h3 style="margin:0; font-weight:800; color:white;">XGBoost & SHAP</h3>
+        <div style="text-align:right; background:linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); padding:12px 24px; border-radius:12px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);">
+            <small style="color:#e0e7ff; text-transform:uppercase; font-weight:700; letter-spacing:1px; font-size:0.75rem;">Simülasyon Modeli</small>
+            <h3 style="margin:0; font-weight:800; color:white; font-size:1.4rem; letter-spacing:-0.5px;">XGBoost & SHAP</h3>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -778,12 +777,12 @@ elif yaka_secimi == "Mavi Yaka":
 st.markdown(f"""
 <div class="dashboard-header">
     <div style="text-align:left;">
-        <h2 style="margin:0; font-weight:800; font-size:1.8rem; color:white;">📊 MKE A.Ş. İK Yönetim Kurulu Sunum Paneli ({yaka_secimi})</h2>
-        <p style="margin:5px 0 0 0; font-size:0.95rem; color:#94A3B8;">Kurumsal Personel Kayıp Riski ve Müdahale Stratejileri Ekranı</p>
+        <h2 style="margin:0; font-weight:800; font-size:1.8rem; color:#0f172a;">📊 MKE A.Ş. İK Yönetim Kurulu Sunum Paneli ({yaka_secimi})</h2>
+        <p style="margin:5px 0 0 0; font-size:0.95rem; color:#475569; font-weight:500;">Kurumsal Personel Kayıp Riski ve Müdahale Stratejileri Ekranı</p>
     </div>
-    <div style="text-align:right; background:rgba(255,255,255,0.08); padding:10px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
-        <small style="color:#94A3B8; text-transform:uppercase; font-weight:700;">Toplam Personel</small>
-        <h3 style="margin:0; font-weight:800; color:white;">{len(df_filtered):,}</h3>
+    <div style="text-align:right; background:linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); padding:12px 24px; border-radius:12px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);">
+        <small style="color:#e0e7ff; text-transform:uppercase; font-weight:700; letter-spacing:1px; font-size:0.75rem;">Toplam Personel</small>
+        <h3 style="margin:0; font-weight:800; color:white; font-size:1.4rem; letter-spacing:-0.5px;">{len(df_filtered):,}</h3>
     </div>
 </div>
 """, unsafe_allow_html=True)
