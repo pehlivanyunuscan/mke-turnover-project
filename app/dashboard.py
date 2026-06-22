@@ -8,8 +8,8 @@ import sys
 import shap
 import matplotlib.pyplot as plt
 
-OPTIMAL_THRESHOLD_BEYAZ = 0.20
-OPTIMAL_THRESHOLD_MAVI = 0.55
+OPTIMAL_THRESHOLD_BEYAZ = 0.55
+OPTIMAL_THRESHOLD_MAVI = 0.50
 
 # Page configuration - McKinsey/Bain style presentation mode
 st.set_page_config(

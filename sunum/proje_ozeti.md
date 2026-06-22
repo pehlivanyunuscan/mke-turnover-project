@@ -49,8 +49,8 @@ Modelin tahmin gücünü artıran ve ham verilerden türetilen 3 temel indeks:
   * *Maaş / Zam artışı* risk skorunu **asla yükseltemez** (Negatif Kısıt).
   * *Fazla mesai / Ev-iş mesafesi artışı* risk skorunu **asla düşüremez** (Pozitif Kısıt).
 * **Karar Eşikleri (Threshold Calibration):**
-  * Beyaz Yaka Optimal Karar Eşiği: **0.20**
-  * Mavi Yaka Optimal Karar Eşiği: **0.55**
+  * Beyaz Yaka Optimal Karar Eşiği: **0.55**
+  * Mavi Yaka Optimal Karar Eşiği: **0.50**
   * **Erken Uyarı Eşiği (Early Warning):** İstifa edecek personellerin en az %80'ini (Recall hedefi) önceden yakalayabilmek için optimize edilmiş daha hassas eşik değeridir.
 
 ---
