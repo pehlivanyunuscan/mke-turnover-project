@@ -25,7 +25,7 @@ if workspace_src not in sys.path:
     sys.path.append(workspace_src)
 from pipeline import MKEDataPipeline
 
-# CSS for premium dark-tech glassmorphism dashboard aesthetic
+# CSS for premium light-slate/ice-blue dashboard aesthetic
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -35,14 +35,14 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Main body background - premium radial gradient dark theme */
+    /* Main body background - premium light-slate gradient theme */
     html, body, [class*="css"], .stApp {
         font-family: 'Outfit', sans-serif !important;
-        background: radial-gradient(circle at 10% 20%, #1e1b4b 0%, #0f172a 45%, #020617 100%) !important;
-        color: #F8FAFC !important;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+        color: #0f172a !important;
     }
     
-    /* Streamlit widgets styling adjustments for dark theme readibility */
+    /* Streamlit widgets styling adjustments for light theme readability */
     div[data-testid="stWidgetLabel"] p,
     div[data-testid="stMarkdownContainer"] p,
     .stRadio label,
@@ -50,69 +50,68 @@ st.markdown("""
     .stSelectbox label,
     .stNumberInput label,
     .stCheckbox label {
-        color: #94A3B8 !important;
-        font-weight: 500 !important;
+        color: #334155 !important;
+        font-weight: 600 !important;
     }
     
-    /* Selectbox custom background to fit dark theme */
+    /* Selectbox custom styling to fit light theme */
     .stSelectbox div[data-baseweb="select"] {
-        background-color: rgba(30, 41, 59, 0.7) !important;
-        color: white !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
     }
     
-    /* Custom Header Card */
+    /* Custom Header Card - premium dark navy contrast header */
     .dashboard-header {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.65) 0%, rgba(15, 23, 42, 0.75) 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 28px;
         border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         color: white;
         margin-bottom: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
     
-    /* Content Cards (Glassmorphism design) */
+    /* Content Cards (Elegant light theme shadow design) */
     .content-card {
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         padding: 26px;
         border-radius: 20px;
-        box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.12);
         margin-bottom: 25px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #0f172a !important;
     }
     .content-card:hover {
-        border-color: rgba(99, 102, 241, 0.2);
+        border-color: rgba(99, 102, 241, 0.4);
         transform: translateY(-2px);
+        box-shadow: 0 12px 35px -10px rgba(99, 102, 241, 0.15);
     }
     
     /* Card Titles */
     .card-title {
         font-size: 1.15rem;
         font-weight: 700;
-        color: #FFFFFF;
+        color: #0f172a;
         margin-bottom: 18px;
         border-left: 4px solid #6366F1;
         padding-left: 12px;
         letter-spacing: 0.5px;
     }
     
-    /* KPI Cards (Glassmorphic layout with glowing borders) */
+    /* KPI Cards (Premium white container with top color indicator and soft shadows) */
     .kpi-container {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.65) 100%);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         padding: 24px;
         border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 30px rgba(148, 163, 184, 0.08);
         text-align: left;
         display: flex;
         flex-direction: column;
@@ -133,13 +132,14 @@ st.markdown("""
     }
     .kpi-container:hover {
         transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(148, 163, 184, 0.15);
     }
     
     .kpi-title {
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        color: #94A3B8;
+        color: #475569;
         font-weight: 700;
         margin-bottom: 12px;
     }
@@ -147,7 +147,7 @@ st.markdown("""
     .kpi-value {
         font-size: 2.6rem;
         font-weight: 800;
-        color: #FFFFFF;
+        color: #0f172a;
         line-height: 1.1;
         margin-bottom: 8px;
         letter-spacing: -1px;
@@ -161,16 +161,16 @@ st.markdown("""
     
     /* Custom status color indicators for KPI card hover effects */
     .kpi-red::before { background: linear-gradient(90deg, #EF4444, #F87171); }
-    .kpi-red:hover { box-shadow: 0 12px 35px rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); }
+    .kpi-red:hover { box-shadow: 0 12px 35px rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.4); }
     
     .kpi-orange::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
-    .kpi-orange:hover { box-shadow: 0 12px 35px rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); }
+    .kpi-orange:hover { box-shadow: 0 12px 35px rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4); }
     
     .kpi-green::before { background: linear-gradient(90deg, #10B981, #34D399); }
-    .kpi-green:hover { box-shadow: 0 12px 35px rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); }
+    .kpi-green:hover { box-shadow: 0 12px 35px rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.4); }
     
     .kpi-blue::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
-    .kpi-blue:hover { box-shadow: 0 12px 35px rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); }
+    .kpi-blue:hover { box-shadow: 0 12px 35px rgba(59, 130, 246, 0.12); border-color: rgba(59, 130, 246, 0.4); }
     
     /* Action Table Styling */
     .action-table {
@@ -180,37 +180,37 @@ st.markdown("""
         margin-top: 15px;
     }
     .action-table th {
-        background-color: rgba(30, 41, 59, 0.4);
-        color: #94A3B8;
+        background-color: #f8fafc;
+        color: #475569;
         font-weight: 600;
         padding: 14px 16px;
         text-align: left;
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 1px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 2px solid #e2e8f0;
     }
     .action-table tr {
-        background-color: rgba(30, 41, 59, 0.2);
+        background-color: #ffffff;
         transition: background-color 0.2s ease;
     }
     .action-table tr:hover {
-        background-color: rgba(30, 41, 59, 0.4);
+        background-color: #f1f5f9;
     }
     .action-table td {
         padding: 16px;
         font-size: 0.875rem;
-        color: #E2E8F0;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: #334155;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
     }
     .action-table td:first-child {
-        border-left: 1px solid rgba(255, 255, 255, 0.04);
+        border-left: 1px solid #e2e8f0;
         border-top-left-radius: 12px;
         border-bottom-left-radius: 12px;
     }
     .action-table td:last-child {
-        border-right: 1px solid rgba(255, 255, 255, 0.04);
+        border-right: 1px solid #e2e8f0;
         border-top-right-radius: 12px;
         border-bottom-right-radius: 12px;
     }
@@ -226,35 +226,35 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
     .badge-red {
-        background-color: rgba(239, 68, 68, 0.15);
-        color: #F87171;
-        border: 1px solid rgba(239, 68, 68, 0.25);
+        background-color: rgba(239, 68, 68, 0.1);
+        color: #EF4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
     }
     .badge-orange {
-        background-color: rgba(245, 158, 11, 0.15);
-        color: #FBBF24;
-        border: 1px solid rgba(245, 158, 11, 0.25);
+        background-color: rgba(245, 158, 11, 0.1);
+        color: #D97706;
+        border: 1px solid rgba(245, 158, 11, 0.2);
     }
     .badge-green {
-        background-color: rgba(16, 185, 129, 0.15);
-        color: #34D399;
-        border: 1px solid rgba(16, 185, 129, 0.25);
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #059669;
+        border: 1px solid rgba(16, 185, 129, 0.2);
     }
     
     /* Customizing Streamlit Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background-color: rgba(15, 23, 42, 0.45) !important;
+        background-color: #f1f5f9 !important;
         padding: 6px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid #e2e8f0;
     }
     .stTabs [data-baseweb="tab"] {
         height: 38px;
         padding: 0 16px;
         background-color: transparent !important;
         border-radius: 8px !important;
-        color: #94A3B8 !important;
+        color: #475569 !important;
         font-weight: 600 !important;
         border: none !important;
         transition: all 0.2s ease;
@@ -262,7 +262,7 @@ st.markdown("""
     .stTabs [aria-selected="true"] {
         background-color: #6366F1 !important;
         color: #FFFFFF !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -817,16 +817,16 @@ if yaka_secimi == "Tüm Çalışanlar":
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#334155')
-        ax.spines['bottom'].set_color('#334155')
-        ax.tick_params(colors='#94A3B8', labelsize=10)
-        ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
+        ax.spines['left'].set_color('#cbd5e1')
+        ax.spines['bottom'].set_color('#cbd5e1')
+        ax.tick_params(colors='#475569', labelsize=10)
+        ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#475569')
         ax.set_axisbelow(True)
         
         for bar in bars:
             width = bar.get_width()
             ax.text(width + 0.5, bar.get_y() + bar.get_height()/2, f'%{width:.1f}', 
-                    va='center', ha='left', color='#F8FAFC', fontweight='bold', fontsize=9)
+                    va='center', ha='left', color='#0f172a', fontweight='bold', fontsize=9)
                     
         plt.tight_layout()
         st.pyplot(fig)
@@ -850,16 +850,16 @@ if yaka_secimi == "Tüm Çalışanlar":
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#334155')
-        ax.spines['bottom'].set_color('#334155')
-        ax.tick_params(colors='#94A3B8', labelsize=10)
-        ax.yaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
+        ax.spines['left'].set_color('#cbd5e1')
+        ax.spines['bottom'].set_color('#cbd5e1')
+        ax.tick_params(colors='#475569', labelsize=10)
+        ax.yaxis.grid(True, linestyle='--', alpha=0.15, color='#475569')
         ax.set_axisbelow(True)
         
         for bar in bars:
             yval = bar.get_height()
             ax.text(bar.get_x() + bar.get_width()/2.0, yval + 0.3, f'%{yval:.1f}', 
-                    va='bottom', ha='center', color='#F8FAFC', fontweight='bold', fontsize=10)
+                    va='bottom', ha='center', color='#0f172a', fontweight='bold', fontsize=10)
                     
         plt.tight_layout()
         st.pyplot(fig)
@@ -881,16 +881,16 @@ else:
     
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#334155')
-    ax.spines['bottom'].set_color('#334155')
-    ax.tick_params(colors='#94A3B8', labelsize=10)
-    ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
+    ax.spines['left'].set_color('#cbd5e1')
+    ax.spines['bottom'].set_color('#cbd5e1')
+    ax.tick_params(colors='#475569', labelsize=10)
+    ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#475569')
     ax.set_axisbelow(True)
     
     for bar in bars:
         width = bar.get_width()
         ax.text(width + 0.5, bar.get_y() + bar.get_height()/2, f'%{width:.1f}', 
-                va='center', ha='left', color='#F8FAFC', fontweight='bold', fontsize=9)
+                va='center', ha='left', color='#0f172a', fontweight='bold', fontsize=9)
                 
     plt.tight_layout()
     st.pyplot(fig)
@@ -925,10 +925,10 @@ with col_det1:
         
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_color('#334155')
-        ax.spines['bottom'].set_color('#334155')
-        ax.tick_params(colors='#94A3B8', labelsize=10)
-        ax.xaxis.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
+        ax.spines['left'].set_color('#cbd5e1')
+        ax.spines['bottom'].set_color('#cbd5e1')
+        ax.tick_params(colors='#475569', labelsize=10)
+        ax.xaxis.grid(True, linestyle='--', alpha=0.15, color='#475569')
         ax.set_axisbelow(True)
         
         plt.tight_layout()
@@ -962,12 +962,12 @@ with col_det2:
     
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#334155')
-    ax.spines['bottom'].set_color('#334155')
-    ax.tick_params(colors='#94A3B8', labelsize=10)
-    ax.grid(True, linestyle='--', alpha=0.1, color='#F8FAFC')
-    ax.set_xlabel("MKE Hizmet Yılı (Kıdem)", color='#94A3B8', fontweight='bold', fontsize=9)
-    ax.set_ylabel("Ortalama Risk Oranı (%)", color='#94A3B8', fontweight='bold', fontsize=9)
+    ax.spines['left'].set_color('#cbd5e1')
+    ax.spines['bottom'].set_color('#cbd5e1')
+    ax.tick_params(colors='#475569', labelsize=10)
+    ax.grid(True, linestyle='--', alpha=0.15, color='#475569')
+    ax.set_xlabel("MKE Hizmet Yılı (Kıdem)", color='#475569', fontweight='bold', fontsize=9)
+    ax.set_ylabel("Ortalama Risk Oranı (%)", color='#475569', fontweight='bold', fontsize=9)
     
     plt.tight_layout()
     st.pyplot(fig)
@@ -1034,13 +1034,13 @@ for idx, row in top_10.iterrows():
     
     # Risk kategorisine göre renk ve badge
     if "ACİL" in row['Risk_Kategorisi']:
-        score_color = "#F87171"
+        score_color = "#B91C1C"
         badge_html = "<span class='badge badge-red'>🚨 ACİL MÜDAHALE</span>"
     elif "ERKEN" in row['Risk_Kategorisi']:
-        score_color = "#FBBF24"
+        score_color = "#D97706"
         badge_html = "<span class='badge badge-orange'>🟡 ERKEN UYARI</span>"
     else:
-        score_color = "#34D399"
+        score_color = "#059669"
         badge_html = "<span class='badge badge-green'>🟢 GÜVENLİ</span>"
     
     table_html += f"""<tr>
@@ -1050,7 +1050,7 @@ for idx, row in top_10.iterrows():
 <td>{row['Unvan']}</td>
 <td style="text-align:right; font-weight:800; color:{score_color};">{risk_formatted}</td>
 <td>{badge_html}</td>
-<td style="font-weight:600; color:#E2E8F0;">⚡ {row['Ana_Sebep']}</td>
+<td style="font-weight:600; color:#334155;">⚡ {row['Ana_Sebep']}</td>
 </tr>"""
 
 table_html += "</tbody></table>"
