@@ -361,6 +361,29 @@ shap_translation = {
     "Mesafe_KM": "Uzak İkametgah ve Ulaşım Zorluğu"
 }
 
+# İK Geri Kazanım Aksiyonu ve Tavsiye Sözlüğü (Birincil Sebeplere Göre)
+recommendation_dict = {
+    "Düşük İş Memnuniyeti": "Çalışan ile İK koordinasyonunda birebir kariyer ve memnuniyet mülakatı planlanmalı, beklentileri analiz edilmeli.",
+    "İş-Özel Hayat Dengesi Problemleri": "Çalışanın fazla mesaileri sınırlandırılmalı, esnek/hibrit çalışma ve ek izin imkanları gözden geçirilmeli.",
+    "Düşük Performans Değerlendirmesi": "Performans gelişim planı (PIP) uygulanmalı, eksik kaldığı teknik yetkinlikler için eğitim programı planlanmalı.",
+    "Düşük Maaş Politikası (Rol Ortalaması Altı)": "Piyasa ve akran analizi yapılarak Compa-Ratio değerinin en az 1.05 seviyesine çekilmesi için ek maaş düzenlemesi/zam planlanmalı.",
+    "Düşük Aylık Maaş": "Rol medyan seviyesine uygun olarak ek ödeme veya unvan bazlı maaş düzenlemesi değerlendirilmeli.",
+    "Aşırı Fazla Mesai Saatleri": "Çalışanın aylık fazla mesaisi 15 saatin altına indirilmeli, kullanılmamış yıllık izinlerinin kullandırılması zorunlu hale getirilmeli.",
+    "Genç Yaş Mobilizasyonu": "Genç yetenek bağlılık programına dahil edilmeli, kurum içi mentor atanmalı ve gelişim projeleri sunulmalı.",
+    "Kıdem ve Tecrübe Eksikliği": "Teknik oryantasyon süreci güçlendirilmeli, kurum içi adaptasyon için buddy (arkadaş) sistemi uygulanmalı.",
+    "Düşük Kurumsal Bağlılık Süresi": "Kuruma uyum ve aidiyet hissini artıracak proaktif stay interview (bağlılık görüşmesi) planlanmalı, mentor atanmalı.",
+    "Kariyer İlerlemesinde Tıkanma": "Kariyer planlama ve yetenek yönetimi görüşmesi yapılmalı; dikey veya yatay unvan rotasyonu / yeni sorumluluklar değerlendirilmeli.",
+    "Terfi Alamama Süresi": "Kariyer yolu haritası gözden geçirilmeli, bir sonraki dönem için net performans/hedef kriterleri tanımlanmalı.",
+    "Yönetici ile Uyumsuzluk Süresi": "Yönetici ile 1-on-1 uyum görüşmeleri planlanmalı; gerekirse departman içi birim değişikliği seçeneği sunulmalı.",
+    "Zam Döneminden Beri Geçen Süre": "Ara dönem maaş iyileştirmesi veya yan hak paketleri (yemek/sağlık kartı artışı) planlanmalı.",
+    "Aşırı Mesai & Hayat Dengesi Çelişkisi": "İş ve özel hayat dengesini kurabilmesi için fazla mesaileri sınırlandırılmalı ve esnek çalışma alternatifleri sunulmalı.",
+    "Düşük Terfi / Kariyer Tıkanıklığı": "Bir üst rol için gerekli eğitim/sertifikasyon planlanmalı, rotasyon fırsatları değerlendirilmeli.",
+    "Aşırı Fazla Mesai / İzin Yetersizliği": "Çalışana acilen zorunlu yıllık izin kullandırılmalı, üzerindeki iş yükünü hafifletecek görev paylaşımı yapılmalı.",
+    "İş Kazası Geçmişi ve Güvensizlik": "İş güvenliği eğitimleri sıklaştırılmalı, tesis içi koruyucu önlemler artırılmalı ve psikososyal destek sunulmalı.",
+    "Uzak İkametgah ve Ulaşım Zorluğu": "MKE lojman kullanımı önceliklendirilmeli veya servis/ulaşım yardım paketleri İK bütçesine dahil edilmeli."
+}
+
+
 def clean_feature_name(name):
     # One-hot encoded ekleri temizle ve sözlükten çevir
     base_name = name
@@ -669,6 +692,31 @@ def render_simulator():
             else:
                 st.write("Belirgin bir risk faktörü bulunamadı.")
                 
+        # Bireysel Geri Kazanım Tavsiyesi Kutusu (Sütunların Altına, Kartın İçine)
+        primary_driver = contributions[0][0] if len(contributions) > 0 else "Belirlenemedi"
+        recomm = recommendation_dict.get(primary_driver, "Çalışan ile İK koordinasyonunda proaktif birebir bağlılık görüşmesi (stay interview) düzenlenmeli ve beklentileri analiz edilmeli.")
+        
+        if prob_val >= opt:
+            box_style = "border: 1px solid #EF4444; background-color: #FEF2F2;"
+            label_style = "color: #B91C1C;"
+        elif prob_val >= ew:
+            box_style = "border: 1px solid #F59E0B; background-color: #FFFBEB;"
+            label_style = "color: #D97706;"
+        else:
+            box_style = "border: 1px solid #10B981; background-color: #ECFDF5;"
+            label_style = "color: #059669;"
+            
+        st.markdown(f"""
+        <div style="{box_style} padding: 18px; border-radius: 12px; margin-top: 20px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);">
+            <strong style="{label_style} font-size: 1.05rem; display: block; margin-bottom: 8px; font-weight: 800;">🎯 İK Aksiyon ve Geri Kazanım Tavsiyesi</strong>
+            <p style="margin: 0; font-size: 0.9rem; color: #1E293B; font-weight: 500; line-height: 1.5;">
+                Yapay zekanın tespit ettiği birincil risk tetikleyicisi: <strong style="color: #0F172A;">{primary_driver}</strong><br>
+                İK departmanı için önerilen proaktif eylem planı:<br>
+                <span style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: block; margin-top: 5px;">👉 {recomm}</span>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         st.markdown("</div>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
@@ -1024,6 +1072,7 @@ table_html = """
             <th style="text-align:right;">İstifa Riski</th>
             <th>Risk Kategorisi</th>
             <th>Birincil Ayrılma Tetikleyicisi (SHAP)</th>
+            <th>Önerilen Geri Kazanım Aksiyonu</th>
         </tr>
     </thead>
     <tbody>
@@ -1043,6 +1092,9 @@ for idx, row in top_10.iterrows():
         score_color = "#059669"
         badge_html = "<span class='badge badge-green'>🟢 GÜVENLİ</span>"
     
+    # Önerilen aksiyon
+    aksiyon = recommendation_dict.get(row['Ana_Sebep'], "Çalışan ile İK koordinasyonunda bağlılık görüşmesi planlanmalı.")
+    
     table_html += f"""<tr>
 <td><strong>{row['Personel_ID']}</strong></td>
 <td>{row['Yaka_Tipi']} Yaka</td>
@@ -1051,6 +1103,7 @@ for idx, row in top_10.iterrows():
 <td style="text-align:right; font-weight:800; color:{score_color};">{risk_formatted}</td>
 <td>{badge_html}</td>
 <td style="font-weight:600; color:#334155;">⚡ {row['Ana_Sebep']}</td>
+<td style="font-weight:500; color:#475569; font-size:0.85rem;">{aksiyon}</td>
 </tr>"""
 
 table_html += "</tbody></table>"
