@@ -1,0 +1,27 @@
+Aşağıda bir Employee Turnover modeline ait test seti metrikleri var. Bu metrikleri analiz et ve bana somut aksiyon ver.
+Confusion Matrix (Beyaz Yaka, Test: 431 kişi):
+
+TN: 389 | FP: 15 | FN: 13 | TP: 14
+Accuracy: %93.5 | Precision: %48.3 | Recall: %51.9 | F1: 0.50
+
+Bağlam:
+
+Model: XGBoost (monotone_constraints uygulanmış)
+Sınıf dağılımı: 404 kalacak / 27 istifa (%6.3 istifa oranı — ciddi imbalance)
+Yarın üst yönetime sunum var, metrikler bu haliyle savunulamaz
+
+
+1. TEŞHİS
+
+Bu confusion matrix'te tam olarak ne yanlış gidiyor?
+%93.5 accuracy neden yanıltıcı, nasıl açıklarım?
+F1: 0.50 ne anlama geliyor, jüri bunu görünce ne düşünür?
+
+
+2. HIZLI DÜZELTMELER (yarına kadar uygulanabilir)
+Her seçenek için çalıştırmaya hazır kod ver:
+
+Seçenek A — Threshold düşür: 0.5 yerine optimal eşik nasıl bulunur? (Precision-Recall curve ile)
+Seçenek B — scale_pos_weight: Mevcut imbalance oranına göre doğru değer nedir, modeli nasıl yeniden train ederim?
+Seçenek C — SMOTE: Eğitim verisine uygulamak için minimal kod
+Her seçeneğin tahmini etkisi nedir? Hangisini önerirsin ve neden?
