@@ -61,19 +61,26 @@ st.markdown("""
         border: 1px solid #cbd5e1 !important;
     }
     
-    /* Custom Header Card - premium light SaaS header style */
+    /* Custom Header Card - premium modern minimalist style */
     .dashboard-header {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        padding: 28px;
-        border-radius: 20px;
-        border: 1px solid #cbd5e1;
-        border-left: 6px solid #6366f1;
-        color: #0f172a;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.15);
+        background: linear-gradient(135deg, #e6effa 0%, #cfdef3 100%) !important;
+        padding: 20px 28px !important;
+        border: 1px solid #b9cde7 !important;
+        border-left: 6px solid #1e40af !important;
+        border-radius: 16px !important;
+        color: #0f172a !important;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px -10px rgba(30, 64, 175, 0.12) !important;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dashboard-header:hover {
+        box-shadow: 0 12px 35px -8px rgba(30, 64, 175, 0.18) !important;
+        border-color: #93c5fd !important;
+        transform: translateY(-2px);
     }
     
     /* Content Cards (Elegant light theme shadow design) */
